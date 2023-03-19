@@ -1,0 +1,98 @@
+drop schema sda1;
+create schema sda1;
+
+use sda1;
+
+-- Create a table for users
+CREATE TABLE users (
+  id INT PRIMARY KEY auto_increment,
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  email VARCHAR(255),
+  password VARCHAR(255),
+  phone_number VARCHAR(255),
+  user_type VARCHAR(50),
+  UNIQUE (id, email)
+);
+
+
+
+-- Create a table for shared content
+CREATE TABLE content (
+  id INT PRIMARY KEY auto_increment,
+  author_id INT,
+  text TEXT,
+  picture VARCHAR(255),
+  created_at TIMESTAMP,
+  FOREIGN KEY (author_id) REFERENCES users(id),
+  UNIQUE (id)
+);
+
+-- Create a table for questions
+CREATE TABLE questions (
+  content_id INT PRIMARY KEY,
+  title VARCHAR(255),
+  FOREIGN KEY (content_id) REFERENCES content(id)
+);
+
+-- Create a table for the tags
+CREATE TABLE tags (
+  id INT PRIMARY KEY auto_increment,
+  name VARCHAR(255),
+  UNIQUE (id)
+);
+
+-- Create a table for question tags (many-to-many relationship)
+CREATE TABLE question_tags (
+  question_id INT,
+  tag_id INT,
+  FOREIGN KEY (question_id) REFERENCES questions(content_id),
+  FOREIGN KEY (tag_id) REFERENCES tags(id)
+);
+
+-- Create a table for answers
+CREATE TABLE answers (
+  content_id INT PRIMARY KEY,
+  question_id INT,
+  FOREIGN KEY (content_id) REFERENCES content(id),
+  FOREIGN KEY (question_id) REFERENCES questions(content_id)
+);
+
+-----------------------------------------------------------------------
+
+-- Insert values into the users table
+INSERT INTO users (id, first_name, last_name, email, password, phone_number, user_type)
+VALUES (1, 'John', 'Doe', 'johndoe@example.com', 'password123', '1234567890', 'regular'),
+(2, 'Jane', 'Doe', 'janedoe@example.com', 'password456', '0987654321', 'moderator');
+
+-- Insert values into the content table
+INSERT INTO content (id, author_id, text, picture, created_at)
+VALUES (1, 1, 'This is a sample text for question', 'sample.jpg', '2023-03-16 10:00:00'),
+(2, 2, 'This is an answer to This is a sample text question', 'answer_sample.jpg', '2023-03-16 13:00:00'),
+(3, 2, 'Another sample question', 'another_sample.jpg', '2023-03-16 11:00:00'),
+(4, 1, 'I''m new to SQL and I''m trying to figure out how to insert data into a table. Can anyone help?', 'example.jpg', '2023-03-16 13:30:00');
+
+-- Insert values into the questions table
+INSERT INTO questions (content_id, title)
+VALUES (1, 'Sample question 1'),
+(3, 'Sample question 2'),
+(4, 'How to insert data into a SQL table?');
+
+-- Insert values into the tags table
+INSERT INTO tags (id, name)
+VALUES (1, 'sample_tag_1'),
+(2, 'sample_tag_2'),
+(3, 'SQL'),
+(4, 'database'),
+(5, 'insert');
+
+-- Insert values into the question_tags table
+INSERT INTO question_tags (question_id, tag_id)
+VALUES (1, 1),
+(1, 2),
+(3, 2),
+(4, 3), (4, 4), (4, 5);
+
+-- Insert values into the answers table
+INSERT INTO answers (content_id, question_id)
+VALUES (2,1);
