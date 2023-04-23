@@ -1,0 +1,22 @@
+<nav class="flex justify-between p-4 bg-orange-500 text-white">
+  <div>
+    <h1 class="font-bold">Simple Stackoverflow</h1>
+  </div>
+  <div>
+    <a class="mx-4" routerLink="/"> Home page</a>
+    <ng-container *ngIf="!isAuthenticated()">
+      <a class="mx-4" routerLink="/login"> Login</a>
+      <a class="mx-4" routerLink="/register"> Register</a>
+    </ng-container>
+    <ng-container *ngIf="isAuthenticated()">
+      <button (click)="logout()" class="mx-4">Logout</button>
+      <a class="mx-4" routerLink="/user/profile">My Profile</a>
+      <a class="mx-4" routerLink="/user/questions">My Questions</a>
+      <a class="mx-4" routerLink="/user/answers">My Answers</a>
+    </ng-container>
+  </div>
+</nav>
+<!-- <app-answers></app-answers>
+<app-questions></app-questions>
+<app-users></app-users> -->
+<router-outlet></router-outlet>

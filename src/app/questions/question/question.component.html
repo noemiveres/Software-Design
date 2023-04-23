@@ -1,0 +1,12 @@
+<li class="question">
+    <div class="odd"><strong>#{{question.id}} {{question.title}}</strong><br></div>
+    <div class="even">{{question.author.firstName}} {{question.author.lastName}} posted
+        at {{question.creationDate | date:'short'}}<br></div>
+    <div class="odd">{{question.text}}<br></div>
+    <div class="even">{{question.tags}}<br></div>
+    <div class="odd"><img [src]="question.picture" [alt]="question.title" width="200" class="mx-auto pt-4"><br></div>
+    <div class="flex justify-between border rounded px-4 bg-orange-200 text-black">
+        <a routerLink="questions/ + {{question.id}} + /answers"><strong>See the answers</strong></a>
+        <a routerLink="/answers/new"><strong>Answer this question</strong></a>
+    </div>
+</li>

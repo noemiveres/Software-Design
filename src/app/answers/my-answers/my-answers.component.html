@@ -1,0 +1,11 @@
+<div class="flex justify-center items-center">
+    <h1 class="text-center text-xl p-2">My Answers</h1>
+    <button class="fixed top-28 p-1 w-36 bg-orange-400 text-black hover:bg-orange-300 rounded" (click)="showMore()">
+        Load more
+    </button>
+    <ul class="w-1/2 mt-40 fixed top-8 h-80 overflow-y-auto">
+      <ng-container *ngFor="let singleAnswer of answers | slice:0:currentIndex">
+        <app-answer [answer]="singleAnswer"></app-answer>
+      </ng-container>
+    </ul>
+  </div>

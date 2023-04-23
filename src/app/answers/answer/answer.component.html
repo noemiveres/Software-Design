@@ -1,0 +1,9 @@
+<li class="answer">
+    <div class="odd">
+        <strong>#{{answer.id}} Answer to question #{{answer.question.id}}</strong>
+        {{answer.question.text}}<br></div>
+    <div class="even"> {{answer.author.firstName}} {{answer.author.lastName}} posted
+        at {{answer.creationDate | date:'short'}}<br></div>
+    <div class="odd">{{answer.text}}<br></div>
+    <div class="odd"><img [src]="answer.picture" width="200" class="mx-auto pt-4"><br></div>
+</li>

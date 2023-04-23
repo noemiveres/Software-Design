@@ -1,0 +1,21 @@
+/* ul {
+    height: 300px; set a fixed height for the ul
+    overflow-y: auto; add a scrollbar when the content overflows
+    float: left;
+    position: relative;
+    top: 30px;
+    right: 220px;
+} */
+ul {
+    height: 350px;
+    overflow-y: auto;
+    float: left;
+}
+
+/* .a {
+    position: fixed;
+    width: 150px;
+    height: 50px;
+    top: 100px;
+    right: 50%;
+} */

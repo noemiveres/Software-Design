@@ -1,0 +1,27 @@
+<div class="flex justify-center items-center">
+  <div class="fixed top-20 right-100">
+    <a class="w-40 px-4 py-2 bg-orange-400 text-black hover:bg-orange-300 rounded" routerLink="/questions/new">New
+      Question</a>
+  </div>
+  <button class="fixed top-32 p-1 w-36 bg-orange-400 text-black hover:bg-orange-300 rounded"
+    (click)="areDisplayed = true">
+    <ng-container *ngIf="!areDisplayed">
+      Show Latest Questions</ng-container>
+  </button>
+  <button class="fixed top-32 p-1 w-36 bg-orange-400 text-black hover:bg-orange-300 rounded" (click)="showMore()">
+    <ng-container *ngIf="areDisplayed">
+      Load more
+    </ng-container>
+  </button>
+  <ul *ngIf="areDisplayed" class="w-1/2 mt-40 fixed top-8">
+    <ng-container *ngFor="let singleQuestion of questions | slice:0:currentIndex">
+      <app-question [question]="singleQuestion"></app-question>
+    </ng-container>
+  </ul>
+  <div *ngIf="!areDisplayed" class="flex items-center justify-center fixed top-72">
+    <h1 class="text-4xl text-center bg-orange-200 text-black rounded px-40 py-12">
+      Welcome to my simple<br>Stackoverflow website!<br>
+      <span class="text-xl block py-4">A place to help you solve your coding challenges</span>
+    </h1>
+  </div>
+</div>

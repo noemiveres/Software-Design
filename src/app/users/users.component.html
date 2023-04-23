@@ -1,0 +1,10 @@
+<p>Users list</p>
+<button class="show_hide" (click)="areDisplayed = !areDisplayed">
+    <ng-container *ngIf="!areDisplayed">Show Users</ng-container>
+    <ng-container *ngIf="areDisplayed">Hide Users</ng-container>
+</button>
+<ul *ngIf="areDisplayed">
+    <ng-container *ngFor="let singleUser of users">
+        <app-user [user]="singleUser"></app-user>
+    </ng-container>
+</ul>
