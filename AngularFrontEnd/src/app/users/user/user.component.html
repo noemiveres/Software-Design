@@ -1,0 +1,10 @@
+<ul>
+    <div>
+      <strong>{{user.firstName}} {{user.lastName}}</strong> 
+      <span *ngIf="user.userType === 'MODERATOR'" class="ml-1 text-blue-500">M</span>
+      <span class="ml-4">Score: {{ score }}</span>
+      <span class="text-red-600 ml-4" [ngClass]="{'hidden': !user.banned}">Banned</span>
+      <button *ngIf="user.banned && currentUser.userType === 'MODERATOR'" class="ml-4 font-bold text-xs" (click)="unbanUser()">UNBAN</button>
+    </div>
+  </ul>
+  

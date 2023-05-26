@@ -1,0 +1,10 @@
+<div class="flex justify-center mt-8">
+    <ul class="flex justify-center flex-col w-1/3">
+      <ng-container *ngFor="let singleUser of users">
+        <li class="flex items-center">
+          <app-user [user]="singleUser"></app-user>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  

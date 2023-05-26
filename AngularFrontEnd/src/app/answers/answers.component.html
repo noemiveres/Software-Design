@@ -1,0 +1,46 @@
+<div class="flex justify-center items-center">
+    <button class="fixed top-24 p-1 w-36 bg-orange-400 text-black hover:bg-orange-300 rounded" (click)="showMore()">
+        Load more
+    </button>
+    <button class="fixed top-36 p-1 w-36 bg-orange-400 text-black hover:bg-orange-300 rounded"
+    (click)="reload()">
+        Reload
+    </button>
+    <ul class="w-1/2 mt-40 fixed top-8 h-80 overflow-y-auto">
+      <div class="odd"><strong>#{{question.id}} {{question.title}}</strong><br></div>
+      <div class="even">{{question.author?.firstName}} {{question.author?.lastName}} ({{score}})
+        posted at {{question.creationDate | date:'short'}}<br></div>
+      <div class="odd">{{question.text}}<br></div>
+    <div class="even">
+        <span *ngFor="let tagGroup of question.tags; let i = index">
+            <span *ngFor="let tag of tagGroup | keyvalue | slice:1; let last = last;">
+                #{{ tag.value }}{{ last && i == question.tags.length - 1 ? '' : ' ' }}
+            </span>
+        </span>  
+    </div> 
+    <div class="odd"><img [src]="question.picture" [alt]="question.title" width="200" class="mx-auto pt-2"><br></div>
+    <div class="flex justify-between border rounded px-2 bg-orange-200 text-black">
+        <a (click)="navigateToAnswer(question.id)"><strong>Answer this question</strong></a>
+    </div>
+    <div class="even flex justify-between border h-8 px-4">
+        <button 
+        *ngIf="currentUser.userId != question.author?.userId"
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+        (click) = "like()">
+            Like
+        </button>
+        <button
+        *ngIf="currentUser.userId != question.author?.userId" 
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+        (click) = "dislike()">
+            Dislike
+        </button>
+        <div class="text-m">
+            Vote count: {{voteCount}}
+        </div>
+    </div>
+      <ng-container *ngFor="let singleAnswer of answers | slice:0:currentIndex">
+        <app-answer [answer]="singleAnswer"></app-answer>
+      </ng-container>
+    </ul>
+  </div>

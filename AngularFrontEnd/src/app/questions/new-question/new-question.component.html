@@ -1,0 +1,43 @@
+<form (submit)="newQuestion()" #myForm="ngForm" class="p-4 mt-10 rounded-lg border m-auto w-1/3">
+    <h1 class="text-center text-xl">New question</h1>
+    <div class="my-5 w-full">
+        <input type="text" class="p-2 rounded w-full border text-sm" placeholder="Title" [(ngModel)]="question.title"
+            name="title" required>
+    </div>
+    <div>
+        <textarea class="p-2 rounded w-full border text-sm" placeholder="Your question" [(ngModel)]="question.text"
+            name="text" required></textarea>
+    </div>
+    <div>
+        <input type="text" class="p-2 rounded w-full border text-sm" placeholder="Picture"
+            [(ngModel)]="question.picture" name="picture" required>
+    </div>
+    <span *ngIf="question.picture && question.picture.length > 255" style="color: red;">
+        Maximum length exceeded (255 characters)
+    </span>
+    <div>
+        <div class="flex flex-wrap items-center">
+            <label for="tags" class="w-1/3 pr-4">Tags:</label>
+            <select class="w-2/3 h-16 my-3" id="tags" multiple (change)="onSelect($event)">
+              <option *ngFor="let tag of tags">{{ tag }}</option>
+            </select>
+        </div>
+        <div class="my-3">
+            <p *ngIf="selectedTags.length > 0">Selected tags:</p>
+            <span *ngFor="let tag of selectedTags; let last = last;">
+                #{{tag}}{{last ? '' : ' '}}
+            </span>
+        </div>
+        <div class="flex items-center">
+            <input type="text" class="p-2 rounded w-full border text-sm" #newTagInput placeholder="Add new tag">
+            <button class="ml-2 p-2 w-100 bg-orange-400 text-white hover:bg-orange-200 rounded" 
+                (click)="addTag(newTagInput, $event)">Add</button>
+        </div>   
+    </div>
+    <div class="my-3 w-full">
+        <button type="submit" [disabled]="myForm.form.invalid"
+            class="p-2 w-full bg-orange-500 text-white hover:bg-orange-300 rounded">
+            Submit
+        </button>
+    </div>
+</form>
