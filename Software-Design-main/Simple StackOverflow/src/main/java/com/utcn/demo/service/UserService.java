@@ -2,7 +2,9 @@ package com.utcn.demo.service;
 
 import com.utcn.demo.entity.User;
 import com.utcn.demo.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +40,12 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
+    @Transactional
+    public User loadUserByEmail(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
+
+    }
 
 
 }

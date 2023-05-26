@@ -30,6 +30,11 @@ public class AnswerController {
         return answerService.retrieveAnswerById(id);
     }
 
+    @GetMapping("/ofUser/{id}")
+    public List<Answer> getAnswersByUserId(@PathVariable Long id){
+        return answerService.getAnswersByUserId(id);
+    }
+
     @PostMapping
     public void createAnswer(@RequestBody Answer answer) {
         answerService.saveAnswer(answer);

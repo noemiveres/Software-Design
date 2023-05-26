@@ -30,11 +30,21 @@ public class User {
     private String phoneNumber;
 
     @Column(name = "user_type")
-    private String userType;
+    @Enumerated(EnumType.STRING)
+    private EUserType userType;
 
-    @OneToMany(targetEntity = Content.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
-    private List<Content> contents = new ArrayList<>();
+    @Column(name = "banned")
+    private boolean banned;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Question> questions = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+//    //@JoinColumn(name = "author_id", referencedColumnName = "id")
+//    private List<Content> content = new ArrayList<>();
 
 
     public User() {
@@ -42,7 +52,7 @@ public class User {
     }
 
     public User(Long userId, String firstName, String lastName, String email, String password,
-                String phoneNumber, String userType) {
+                String phoneNumber, EUserType userType, boolean banned) {
         //this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,6 +60,7 @@ public class User {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.userType = userType;
+        this.banned = false;
     }
 
     public Long getUserId() {
@@ -100,11 +111,19 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getUserType() {
+    public EUserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(EUserType userType) {
         this.userType = userType;
+    }
+
+    public boolean getBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
     }
 }

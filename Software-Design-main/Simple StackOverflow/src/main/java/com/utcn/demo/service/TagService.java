@@ -5,6 +5,7 @@ import com.utcn.demo.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,15 @@ public class TagService {
 
     public List<Tag> retrieveAllTags() {
         return (List<Tag>) tagRepository.findAll();
+    }
+
+    public List<String> retrieveAllTagsNames() {
+        List<Tag> tags = (List<Tag>) tagRepository.findAll();
+        List<String> tagNames = new ArrayList<>();
+        for(Tag tag : tags) {
+            tagNames.add(tag.getName());
+        }
+        return tagNames;
     }
 
     public Optional<Tag> retrieveTagById(Long id) {
@@ -42,4 +52,7 @@ public class TagService {
         return tag;
     }
 
+    public Tag retrieveTagByName(String name) {
+        return tagRepository.findByName(name);
+    }
 }

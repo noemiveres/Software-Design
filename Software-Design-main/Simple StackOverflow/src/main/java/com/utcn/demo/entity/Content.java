@@ -3,6 +3,7 @@ package com.utcn.demo.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "content")
@@ -14,7 +15,7 @@ public class Content {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(name = "author_id")
     private User author;
 
     @Column(name = "text")
@@ -26,7 +27,8 @@ public class Content {
     @Column(name = "created_at")
     private LocalDateTime creationDate;
 
-
+    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
+    private List<Vote> votes;
 
     public Content(){
 

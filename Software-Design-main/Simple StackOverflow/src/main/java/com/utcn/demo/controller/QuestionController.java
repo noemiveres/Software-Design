@@ -25,6 +25,26 @@ public class QuestionController {
         return questionService.retrieveQuestionById(id);
     }
 
+    @GetMapping("/ofUser/{id}")
+    public List<Question> getQuestionsByUserId(@PathVariable Long id){
+        return questionService.getQuestionsByUserId(id);
+    }
+
+    @GetMapping("/ofTag/{tagName}")
+    public List<Question> getQuestionsByTagName(@PathVariable String tagName){
+        return questionService.getQuestionsByTagName(tagName);
+    }
+
+    @GetMapping("/search/{searchTerm}")
+    public List<Question> getQuestionsBySearchTerm(@PathVariable String searchTerm) {
+        return questionService.getQuestionsByTitle(searchTerm);
+    }
+
+    @GetMapping("/search/{firstName}/{lastName}")
+    public List<Question> getQuestionsByUser(@PathVariable String firstName, @PathVariable String lastName) {
+        return questionService.getQuestionsByAuthor(firstName, lastName);
+    }
+
     @PostMapping
     public void createQuestion(@RequestBody Question question) {
         questionService.saveQuestion(question);

@@ -21,6 +21,10 @@ public class AnswerService {
         return answerRepository.findAllByQuestionId(questionId);
     }
 
+    public List<Answer> getAnswersByUserId(Long id) {
+        return answerRepository.findAllByAuthorUserId(id);
+    }
+
     public Optional<Answer> retrieveAnswerById(Long id) {
         return answerRepository.findById(id);
     }
@@ -32,4 +36,6 @@ public class AnswerService {
     public void deleteAnswerById(Long id) {
         answerRepository.deleteById(id);
     }
+
+
 }

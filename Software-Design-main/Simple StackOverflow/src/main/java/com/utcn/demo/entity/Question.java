@@ -14,8 +14,7 @@ public class Question extends Content {
     @Column(name = "title")
     private String title;
 
-//    @ManyToMany(targetEntity = Tag.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
- @ManyToMany(targetEntity = Tag.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Tag.class, cascade = CascadeType.ALL)
     @JoinTable(name = "question_tags",
             joinColumns = @JoinColumn(name = "question_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
