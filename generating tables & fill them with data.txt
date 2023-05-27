@@ -1,0 +1,117 @@
+drop schema sda1;
+create schema sda1;
+
+use sda1;
+
+-- Create a table for users
+CREATE TABLE users (
+  id INT PRIMARY KEY auto_increment,
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  email VARCHAR(255),
+  password VARCHAR(255),
+  phone_number VARCHAR(255),
+  user_type VARCHAR(50),
+  banned bool,
+  UNIQUE (id, email)
+);
+
+
+
+-- Create a table for shared content
+CREATE TABLE content (
+  id INT PRIMARY KEY auto_increment,
+  author_id INT,
+  text TEXT,
+  picture VARCHAR(255),
+  created_at TIMESTAMP,
+  FOREIGN KEY (author_id) REFERENCES users(id),
+  UNIQUE (id)
+);
+
+-- Create a table for questions
+CREATE TABLE questions (
+  content_id INT PRIMARY KEY,
+  title VARCHAR(255),
+  FOREIGN KEY (content_id) REFERENCES content(id)
+);
+
+-- Create a table for the tags
+CREATE TABLE tags (
+  id INT PRIMARY KEY auto_increment,
+  name VARCHAR(255),
+  UNIQUE (id)
+);
+
+-- Create a table for question tags (many-to-many relationship)
+CREATE TABLE question_tags (
+  question_id INT,
+  tag_id INT,
+  FOREIGN KEY (question_id) REFERENCES questions(content_id),
+  FOREIGN KEY (tag_id) REFERENCES tags(id)
+);
+
+-- Create a table for answers
+CREATE TABLE answers (
+  content_id INT PRIMARY KEY,
+  question_id INT,
+  FOREIGN KEY (content_id) REFERENCES content(id),
+  FOREIGN KEY (question_id) REFERENCES questions(content_id)
+);
+
+-- Create a table for the votes
+CREATE TABLE vote (
+  vote_id INT PRIMARY KEY auto_increment,
+  user_id INT,
+  content_id INT,
+  vote_type VARCHAR(25),
+  FOREIGN KEY (user_id) REFERENCES users (id),
+  FOREIGN KEY (content_id) REFERENCES content (id)
+);
+
+
+-----------------------------------------------------------------------
+
+-- Insert values into the users table
+INSERT INTO users (id, first_name, last_name, email, password, phone_number, user_type, banned)
+VALUES (1, 'John', 'Doe', 'johndoe@example.com', 'password123', '1234567890', 'REGULAR', false),
+(2, 'Jane', 'Doe', 'janedoe@example.com', 'password456', '0987654321', 'MODERATOR', true)
+;
+
+-- Insert values into the content table
+INSERT INTO content (id, author_id, text, picture, created_at)
+VALUES (1, 1, 'This is a sample text for question', 'https://c.pxhere.com/photos/b8/5a/cat_baby_cats-1210151.jpg!d', '2023-03-16 10:00:00'),
+(2, 2, 'This is an answer to This is a sample text question', 'https://www.thesprucepets.com/thmb/hJ40hdpK4KZ5AehlMmVEdJr8zPI=/1999x1459/filters:fill(auto,1)/twenty20_e47b3798-dd9b-40b1-91ef-1d820337966e-5aa3f798642dca00363b0df1.jpg', '2023-03-16 13:00:00'),
+(3, 2, 'Another sample question', 'http://pulpbits.net/wp-content/uploads/2014/01/Tabby-Cat-Images.jpg', '2023-03-16 11:00:00'),
+(4, 1, 'I''m new to SQL and I''m trying to figure out how to insert data into a table. Can anyone help?', 'http://4.bp.blogspot.com/-6iOuVnVB9U0/UDB2eUWSogI/AAAAAAAAPdw/S8xCBocdKZU/s1600/Cute+Kitten+19.jpg', '2023-03-16 13:30:00');
+
+-- Insert values into the questions table
+INSERT INTO questions (content_id, title)
+VALUES (1, 'Sample question 1'),
+(3, 'Sample question 2'),
+(4, 'How to insert data into a SQL table?');
+
+-- Insert values into the tags table
+INSERT INTO tags (id, name)
+VALUES (1, 'sample_tag_1'),
+(2, 'sample_tag_2'),
+(3, 'SQL'),
+(4, 'database'),
+(5, 'insert');
+
+-- Insert values into the question_tags table
+INSERT INTO question_tags (question_id, tag_id)
+VALUES (1, 1),
+(1, 2),
+(3, 2),
+(4, 3), (4, 4), (4, 5);
+
+-- Insert values into the answers table
+INSERT INTO answers (content_id, question_id)
+VALUES (2,1);
+
+-- Insert values into the vote table
+INSERT INTO vote (user_id, content_id, vote_type)
+VALUES (1, 1, 'UPVOTE'),
+(2, 1, 'DOWNVOTE'),
+(1, 2, 'UPVOTE');
